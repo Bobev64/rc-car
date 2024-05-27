@@ -1,24 +1,19 @@
-import mpu6050
 import time
+from sensors import Sensors
 
-mpu6050 = mpu6050.mpu6050(0x68)
-
-def readSensorData():
-    accelData = mpu6050.get_accel_data()
-
-    gyroData = mpu6050.get_gyro_data()
-
-    temp = mpu6050.get_temp()
-
-    return accelData, gyroData, temp
+imu = Sensors
+currVelDat={}
+prevVelDat={'x': 0, 'y': 0, 'z': 0}
+cycleTime=0
+timeStamp=time.time()
 
 
 while True:
-
-    accelData, gyroData, temp = readSensorData()
-
-    print(f"Accelerometer Data: {accelData}")
-    print(f"Gyroscope Data: {gyroData}")
-    print(f"Temperature Data: {temp}")
-
-    time.sleep(1)
+    accelData = imu.getAccelData()
+    cycleTime = timeStamp - time.time()
+    for axis in accelData:
+        currVelDat[axis] = prevVelDat[axis] + accelData[axis]*(cycleTime)
+    prevVelDat = currVelDat.copy()
+    print(f"Current velocity: {currVelDat}")
+    time.sleep(.1)
+    timeStamp = time.time()

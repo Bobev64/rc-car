@@ -1,4 +1,6 @@
 # Responsible for interacting with all sensors on the vehicle
+# Kinda useless right now, mostly just a wrapper.
+# TODO: add on filters later
 import mpu6050
 
 class Sensors:
@@ -7,8 +9,8 @@ class Sensors:
         imu = mpu6050.mpu6050(0x68)
 
     # Gets accelerometer data from the IMU
-    # Afaik returns in m/s^2
-    # TODO: Double check the above
+    # Returns in m/s^2. NOTE: the get_accel_data() function can have a 
+    # g=True argument passed to return accel data in gs
     def getAccelData(self):
         return self.imu.get_accel_data()
     
