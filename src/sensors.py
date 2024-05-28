@@ -6,7 +6,7 @@ import mpu6050
 class Sensors:
     def __init__(self):
         # TODO: Make I2C address changeable at some point
-        imu = mpu6050.mpu6050(0x68)
+        self.imu = mpu6050.mpu6050(0x68)
 
     # Gets accelerometer data from the IMU
     # Returns in m/s^2. NOTE: the get_accel_data() function can have a 
